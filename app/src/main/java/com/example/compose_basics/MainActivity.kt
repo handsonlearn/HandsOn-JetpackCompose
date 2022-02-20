@@ -19,22 +19,28 @@ class MainActivity : ComponentActivity() {
             ComposeBasicsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    Greeting(Message("Amit", "I am happy"))
                 }
             }
         }
     }
 }
 
+data class Message(
+    val author: String,
+    val body: String
+)
+
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun Greeting(message: Message) {
+    Text(text = message.author)
+    Text(text = message.body)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeBasicsTheme {
-        Greeting("Android")
+        Greeting(Message("Amit", "I am happy"))
     }
 }

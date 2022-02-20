@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,6 +19,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose_basics.data.Message
+import com.example.compose_basics.data.SampleData
 import com.example.compose_basics.ui.theme.ComposeBasicsTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,20 +33,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting(Message("Amit", "I am happy"))
+                    MessageCard(Message("Amit", "I am happy"))
                 }
             }
         }
     }
 }
 
-data class Message(
-    val author: String,
-    val body: String
-)
-
 @Composable
-fun Greeting(message: Message) {
+fun MessageCard(message: Message) {
     Row(Modifier.padding(all = 8.dp)) {
         Image(
             painter = painterResource(id = R.drawable.profile_picture),
@@ -74,6 +73,15 @@ fun Greeting(message: Message) {
     }
 }
 
+@Composable
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) { msg ->
+            MessageCard(message = msg)
+        }
+    }
+}
+
 @Preview(name = "Light Mode")
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
@@ -83,6 +91,6 @@ fun Greeting(message: Message) {
 @Composable
 fun DefaultPreview() {
     ComposeBasicsTheme {
-        Greeting(Message("Amit", "I am happy"))
+        Conversation(messages = SampleData.conversationSample)
     }
 }
